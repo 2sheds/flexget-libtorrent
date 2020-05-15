@@ -21,8 +21,25 @@ JW_TOKEN=$(curl -s -H "Content-Type: application/json" \
   https://hub.docker.com/v2/users/login/ | python -c "import sys, json; print json.load(sys.stdin)['token']")
 
 function manifest_annotate {
-  ${DOCKER_CLI} manifest annotate $1 ${IMAGE_PREFIX}-arm --os linux --arch "arm" --variant "7"
-  ${DOCKER_CLI} manifest annotate $1 ${IMAGE_PREFIX}-arm64 --os linux --arch "arm64" --variant "8"
+  for i in ${ARCH_LIST}; do
+    case $i in
+	  armhf)
+        EXTRA_PARAM="--variant 'v6'"
+        ;;
+	  arm)
+        EXTRA_PARAM="--variant 'v7'"
+        ;;
+      arm64)
+        EXTRA_PARAM="--variant 'v8'"
+        ;;
+	  amd64)
+        continue # Skip default arch
+        ;;
+      *)
+        ;;
+	esac
+    ${DOCKER_CLI} manifest annotate $1 ${IMAGE_PREFIX}-${i} --os linux --arch "$i" ${EXTRA_PARAM}
+  done
 }
 
 ${DOCKER_CLI} manifest create --amend ${IMAGE_PREFIX} ${IMAGE_LIST} || exit 0
