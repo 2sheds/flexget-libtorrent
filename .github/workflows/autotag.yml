@@ -16,5 +16,5 @@ jobs:
       with:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         source_file: "requirements.txt"
-        extraction_regex: "homeassistant==(\\d+.\\d+.\\d+)"
+        extraction_regex: "flexget==(\\d+.\\d+.\\d+)"
         tag_message: ""
