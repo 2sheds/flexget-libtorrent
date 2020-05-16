@@ -43,18 +43,14 @@ RUN apk add --update-cache ${PACKAGES} && \
     adduser -D -G flexget -s /bin/sh -u ${UID} flexget && \
     pip3 install --upgrade pip && \
     pip3 install --no-cache-dir --prefer-binary ${PLUGINS} && \
-    # Build master branch from source (workaround until v3.1.52 removes pillow dependency)
-    pip3 install --upgrade setuptools wheel && \
-    git clone -b master --depth 1 https://github.com/Flexget/Flexget.git flexget && \
-    pip3 wheel -e ./flexget && \
-    pip3 install --no-cache-dir --no-index --force-reinstall -f . flexget && \
+    pip3 install --no-cache-dir --prefer-binary --upgrade --force-reinstall flexget==${VERSION} && \
     FLEXGET_PATH=$(python3 -c 'import os, flexget; print (os.path.dirname(flexget.__file__))') && \
     wget https://github.com/Flexget/webui/releases/latest/download/dist.zip && \
     unzip dist.zip && \
     rm dist.zip && \
     cp -R dist ${FLEXGET_PATH}/ui/v2/ && \
     apk del build-dependencies && \
-    rm -rf /tmp/* /var/tmp/* /usr/src/* /root/.cache/pip /var/cache/apk/*
+    rm -rf /tmp/* /var/tmp/* /usr/src/* /var/cache/apk/*
 
 WORKDIR /config
 
