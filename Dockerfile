@@ -41,7 +41,8 @@ RUN apk add --update-cache ${PACKAGES} && \
     apk add --virtual=build-dependencies build-base libffi-dev ${DEPS} && \
     addgroup -g ${GUID} flexget && \
     adduser -D -G flexget -s /bin/sh -u ${UID} flexget && \
-    pip3 install --upgrade pip && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python3 get-pip.py && \
     pip3 install --no-cache-dir --prefer-binary ${PLUGINS} && \
     pip3 install --no-cache-dir --prefer-binary --upgrade --force-reinstall flexget==${VERSION} && \
     FLEXGET_PATH=$(python3 -c 'import os, flexget; print (os.path.dirname(flexget.__file__))') && \
