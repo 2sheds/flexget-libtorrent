@@ -66,5 +66,7 @@ ENV PYTHONUNBUFFERED 1
 
 EXPOSE 5050 
 
-ENTRYPOINT ["flexget", "daemon", "start", "--autoreload-config"]
+ENTRYPOINT flexget
+
+CMD daemon start --autoreload-config
 
