@@ -62,6 +62,7 @@ COPY --from=jemalloc /usr/local/lib/libjemalloc.so* /usr/local/lib/
 COPY --from=libtorrent /libtorrent-build/usr/lib/ /usr/lib/
 
 ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so.2
+ENV PYTHONUNBUFFERED 1
 
 EXPOSE 5050 
 
