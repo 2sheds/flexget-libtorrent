@@ -23,7 +23,7 @@ ARG MAKEFLAGS=-j4
 ARG VERSION="3.1.51"
 ARG DEPS="linux-headers openssl-dev unzip git"
 ARG PACKAGES="openssl boost-python3 libstdc++ nodejs python3-dev"
-ARG PLUGINS="transmission-rpc cloudscraper deluge-client rarfile sleekxmpp subliminal"
+ARG PLUGINS="transmission-rpc transmissionrpc cloudscraper deluge-client rarfile sleekxmpp subliminal"
 
 LABEL \
   org.opencontainers.image.authors="Oleg Kurapov <oleg@kurapov.com>" \
@@ -66,7 +66,7 @@ ENV PYTHONUNBUFFERED 1
 
 EXPOSE 5050 
 
-ENTRYPOINT flexget
+ENTRYPOINT ["/usr/bin/flexget"]
 
-CMD daemon start --autoreload-config
+CMD ["daemon","start","--autoreload-config"]
 
